@@ -56,10 +56,6 @@ class ContactController extends Controller
         if($request->has('phones')){
             $this->insertPhones($request->phones, $contact->id);
         }
-        if(getSetting("enable_email_notification") == 1 && isset($requestData['assigned_user_id'])) {
-            $this->mailer->sendAssignContactEmail("Contact assigned to you", User::find($requestData['assigned_user_id']), $contact);
-        }
-        Mail::to('receiver-email-id')->send(new NotifyMail());
 
         return redirect()->route('admin.contacts.index')
             ->with('success', 'Contact created successfully.');
